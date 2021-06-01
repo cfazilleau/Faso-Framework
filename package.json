@@ -1,0 +1,19 @@
+{
+  "name": "com.faso.unityframework",
+  "version": "1.0.0",
+  "displayName": "Unity Framework",
+  "description": "Single-player framework package for Unity.",
+  "unity": "2019.4",
+  "unityRelease": "0f1",
+  "dependencies": {
+    "com.unity.inputsystem": "1.0.0"
+  },
+  "keywords": [
+    "template"
+  ],
+  "author": {
+    "name": "Nereid Games"
+  },
+  "hideInEditor": false,
+  "type": "framework"
+}
