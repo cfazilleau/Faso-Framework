@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 using System.Reflection;
 
+using FasoFramework;
+
 [InitializeOnLoad]
 public static class RequireManagerChecker
 {
@@ -55,17 +57,18 @@ public static class RequireManagerChecker
 
 				if (component is MonoBehaviour monoBehaviour)
 				{
-					// Check RequireLayer Attribute on every instance
-					Attribute attr = monoBehaviour.GetType().GetCustomAttribute(typeof(RequireLayerAttribute), true);
-					if (attr != null && monoBehaviour.gameObject.layer != (attr as RequireLayerAttribute).LayerMask)
-					{
-						if ((attr as RequireLayerAttribute).LayerMask == -1)
-							Debug.LogError($"Layer Name does not exist: {(attr as RequireLayerAttribute).LayerName}", go);
-							
-						Debug.LogError($"wrong layer on object {monoBehaviour.gameObject.name}, needs to be set to {LayerMask.LayerToName((attr as RequireLayerAttribute).LayerMask)}", monoBehaviour.gameObject);
-					}
-
 					currentType = monoBehaviour.GetType();
+					
+					// Check RequireLayer Attribute on every instance
+					RequireLayerAttribute attribute = currentType.GetCustomAttribute<RequireLayerAttribute>(true);
+
+					if (attribute != null && monoBehaviour.gameObject.layer != attribute.LayerMask)
+					{
+						if (attribute.LayerMask == -1)
+							Debug.LogError($"Layer Name does not exist: {attribute.LayerName}", go);
+							
+						Debug.LogError($"wrong layer on object {monoBehaviour.gameObject.name}, needs to be set to {LayerMask.LayerToName(attribute.LayerMask)}", monoBehaviour.gameObject);
+					}
 
 					if (!checkedTypes.Contains(currentType))
 					{

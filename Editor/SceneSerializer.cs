@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
 
+using FasoFramework;
+
 [InitializeOnLoad]
 public class SceneSerializer
 {

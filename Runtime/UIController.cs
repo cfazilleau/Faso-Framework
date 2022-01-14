@@ -1,39 +1,43 @@
 ﻿using UnityEngine;
 
-public abstract class UIController : Controller
+
+namespace FasoFramework
 {
-	#region Variables
-
-	[SerializeField]
-	private UIPanel[] panels = new UIPanel[0];
-
-	#endregion
-
-	#region Properties
-
-	#endregion
-
-	#region Unity Methods
-
-	protected override void Awake()
+	public abstract class UIController : Controller
 	{
-		base.Awake();
-	}
+		#region Variables
 
-	#endregion
+		[SerializeField]
+		private UIPanel[] panels = new UIPanel[0];
 
-	#region Custom Methods
+		#endregion
 
-	public T GetPanel<T>() where T : UIPanel
-	{
-		foreach (UIPanel panel in panels)
+		#region Properties
+
+		#endregion
+
+		#region Unity Methods
+
+		protected override void Awake()
 		{
-			if (panel.GetType() == typeof(T))
-				return panel as T;
+			base.Awake();
 		}
 
-		return null;
-	}
+		#endregion
 
-	#endregion
+		#region Custom Methods
+
+		public T GetPanel<T>() where T : UIPanel
+		{
+			foreach (UIPanel panel in panels)
+			{
+				if (panel.GetType() == typeof(T))
+					return panel as T;
+			}
+
+			return null;
+		}
+
+		#endregion
+	}
 }

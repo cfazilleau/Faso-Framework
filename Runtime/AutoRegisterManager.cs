@@ -2,33 +2,36 @@
 
 using UnityEngine;
 
-public class AutoRegisterManager<T> : Manager
+namespace FasoFramework
 {
-	#region Variables
-
-	protected readonly HashSet<T> registeredElements = new HashSet<T>();
-
-	#endregion
-
-	#region Properties
-
-	#endregion
-
-	#region Unity Methods
-
-	#endregion
-
-	#region Custom Methods
-
-	public virtual void RegisterElement(T element)
+	public class AutoRegisterManager<T> : Manager
 	{
-		registeredElements.Add(element);
-	}
+		#region Variables
 
-	public virtual void UnregisterElement(T element)
-	{
-		registeredElements.Remove(element);
-	}
+		protected readonly HashSet<T> registeredElements = new HashSet<T>();
 
-	#endregion
+		#endregion
+
+		#region Properties
+
+		#endregion
+
+		#region Unity Methods
+
+		#endregion
+
+		#region Custom Methods
+
+		public virtual void RegisterElement(T element)
+		{
+			registeredElements.Add(element);
+		}
+
+		public virtual void UnregisterElement(T element)
+		{
+			registeredElements.Remove(element);
+		}
+
+		#endregion
+	}
 }
