@@ -27,6 +27,7 @@ public class SceneSerializer
 		EditorBuildSettings.sceneListChanged += SaveScenesInfo;
 	}
 
+	[MenuItem("Tools/Refresh Scenes Info")]
 	private static void SaveScenesInfo()
 	{
 		//Retrieve the existing asset
