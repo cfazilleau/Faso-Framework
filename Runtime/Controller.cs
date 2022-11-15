@@ -23,11 +23,14 @@ namespace FasoFramework
 		private Type[] methodParameterTypes = new Type[] { typeof(InputAction.CallbackContext) };
 		private object[] parameters = new object[1];
 
+		private bool isSubscribedToPlayerInput = false;
 		public static event Action<InputActionMap> onChangedActionMap = null;
 
 		#endregion
 
 		#region Properties
+
+		public bool ListensInput => isSubscribedToPlayerInput;
 
 		[ShowNativeProperty]
 		public PlayerInput InputSource
@@ -53,7 +56,7 @@ namespace FasoFramework
 
 		protected virtual void Awake()
 		{
-			if (startInputSource != null && inputSource == null)
+			if (inputSource == null && startInputSource != null)
 			{
 				InputSource = startInputSource;
 			}
@@ -92,12 +95,12 @@ namespace FasoFramework
 
 		public void EnableInputs()
 		{
-			InputSource?.ActivateInput();
+			SubscribeToPlayerInput(InputSource);
 		}
 
 		public void DisableInputs()
 		{
-			InputSource?.DeactivateInput();
+			UnsubscribeFromPlayerInput(InputSource);
 		}
 
 		public void SetActionMap(string inputMapName)
@@ -140,16 +143,18 @@ namespace FasoFramework
 		{
 			playerInput.onActionTriggered += ForwardInput;
 			playerInput.onControlsChanged += OnControlsChanged;
-			playerInput.onDeviceLost += OnDeviceLost;
-			playerInput.onDeviceRegained += OnDeviceRegained;
+			playerInput.onDeviceLost	  += OnDeviceLost;
+			playerInput.onDeviceRegained  += OnDeviceRegained;
+			isSubscribedToPlayerInput = true;
 		}
 
 		private void UnsubscribeFromPlayerInput(PlayerInput playerInput)
 		{
 			playerInput.onActionTriggered -= ForwardInput;
 			playerInput.onControlsChanged -= OnControlsChanged;
-			playerInput.onDeviceLost -= OnDeviceLost;
-			playerInput.onDeviceRegained -= OnDeviceRegained;
+			playerInput.onDeviceLost	  -= OnDeviceLost;
+			playerInput.onDeviceRegained  -= OnDeviceRegained;
+			isSubscribedToPlayerInput = false;
 		}
 
 		private void ForwardInput(InputAction.CallbackContext callbackContext)

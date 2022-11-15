@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using NaughtyAttributes;
+using System;
+using UnityEngine;
 
 
 namespace FasoFramework
@@ -16,9 +18,19 @@ namespace FasoFramework
 
 		#region Properties
 
+		[ShowNativeProperty]
 		public Character ControlledCharacter
 		{
-			get => controlledCharacter ?? startControlledCharacter;
+			get
+			{
+				#if UNITY_EDITOR
+				if (controlledCharacter == null)
+					return startControlledCharacter;
+				#endif
+				return controlledCharacter;
+			}
+				
+				
 			set => Possess(value);
 		}
 
